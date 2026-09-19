@@ -1,9 +1,10 @@
 # PLAN - Ejecución por fases
 
-> Estado global: **Fase 0 completada** (scaffolding). El notebook tiene el bloque EDA
-> heredado intacto y las secciones 4–17 con narrativa y código esqueleto.
+> Estado global: **código completo, sin corrida de referencia.** Todas las celdas propias
+> (§4.4–§16) están implementadas y pasaron una prueba de humo en CPU con datos mínimos
+> (2026-09-19). Falta: corrida en T4, lecturas `<!-- LEER -->`, conclusiones §17, filas de MP2.
 
-Leyenda: `[ ]` pendiente · `[~]` en curso · `[x]` hecho
+Leyenda: `[ ]` pendiente · `[~]` código listo, falta ejecutar y leer · `[x]` hecho
 
 ---
 
@@ -14,7 +15,7 @@ Leyenda: `[ ]` pendiente · `[~]` en curso · `[x]` hecho
 - [x] `README.md`, `requirements.txt`, `.gitignore`, estructura de carpetas
 - [x] Copiar §1–§4.3 de MP1 sin modificar (celdas 3–70) + verificación programática
 - [ ] **Confirmar con el profesor:** reutilización del corpus (D-302)
-- [ ] `git init`, primer commit, repositorio remoto
+- [x] `git init`, primer commit, repositorio remoto (privado)
 
 ## Fase 1 - Entorno, corpus y EDA (SPEC §0–3)
 
@@ -24,32 +25,32 @@ Leyenda: `[ ]` pendiente · `[~]` en curso · `[x]` hecho
 ## Fase 2 - Protocolo (SPEC §4)
 
 - [ ] Bloque heredado §4.1–4.3 corre y el assert de baselines pasa (**bloqueante**)
-- [ ] 4.4 Config BERT · 4.5 Tokenizador WordPiece · 4.6 `MAX_LEN_BERT` · 4.7 `DatasetDict`
+- [x] 4.4 Config BERT · 4.5 Tokenizador WordPiece · 4.6 `MAX_LEN_BERT` · 4.7 `DatasetDict` (código)
 
 ## Fase 3 - Tres técnicas (SPEC §5–7)
 
-- [ ] 5 Embeddings cacheados (`[CLS]` y mean) + cabeza lineal + LogReg
-- [ ] 6 Cabeza MLP
-- [ ] 7 `WeightedTrainer` + *fine-tuning* completo, curvas
+- [~] 5 Embeddings cacheados (`[CLS]` y mean) + cabeza lineal + LogReg
+- [~] 6 Cabeza MLP
+- [~] 7 `WeightedTrainer` + *fine-tuning* completo, curvas
 
 ## Fase 4 - Comparación (SPEC §8)
 
-- [ ] Tabla única con MP1/MP2, confusión, costo-beneficio; veredicto H1/H2
+- [~] Tabla única con MP1/MP2, confusión, costo-beneficio; veredicto H1/H2
 
 ## Fase 5 - Estudios (SPEC §9–§12)
 
-- [ ] 9 Capas descongeladas + LLRD
-- [ ] 10 BETO vs. mBERT vs. DistilBETO
-- [ ] 11 Curva de eficiencia de datos (H3)
-- [ ] 12 LoRA
+- [~] 9 Capas descongeladas + LLRD
+- [~] 10 BETO vs. mBERT vs. DistilBETO
+- [~] 11 Curva de eficiencia de datos (H3)
+- [~] 12 LoRA
 
 ## Fase 6 - Control, interpretabilidad, demo (SPEC §13–§15)
 
-- [ ] 13 `Type` · 14 UMAP antes/después + IG · 15 demo y pruebas de estrés
+- [~] 13 `Type` · 14 UMAP antes/después + IG · 15 demo y pruebas de estrés
 
 ## Fase 7 - Errores, cierre y entrega (SPEC §16–§17)
 
-- [ ] 16 Análisis de errores · 17 Conclusiones
+- [~] 16 Análisis de errores · 17 Conclusiones
 - [ ] Quitar todo `<!-- LEER -->` / andamiaje
 - [ ] Restart & Run All en T4, guardar salidas, llenar `EXPERIMENTS.md` y README
 
