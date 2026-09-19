@@ -1,0 +1,40 @@
+# Miniproyecto 3 — NLP
+# Instalación local:  pip install -r requirements.txt
+#                     python -m spacy download es_core_news_lg
+#
+# En Colab la mayoría ya viene preinstalado; el notebook instala solo lo que falta.
+# Versiones con cota inferior, no fijadas, para no romper el entorno de Colab.
+
+# --- Datos y cómputo numérico ---
+numpy>=1.26
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+
+# --- Corpus y checkpoints ---
+datasets>=2.19
+huggingface-hub>=0.23
+
+# --- Deep learning / modelos preentrenados ---
+torch>=2.2
+transformers>=4.41
+accelerate>=0.30          # requerido por Trainer
+torchinfo>=1.8            # resumen de parámetros entrenables (igual que el notebook guía)
+
+# --- Más allá del guía ---
+peft>=0.11                # LoRA, §12
+captum>=0.7               # Integrated Gradients, §14
+umap-learn>=0.5           # proyección del espacio de embeddings, §14
+
+# --- Solo para el EDA heredado ---
+spacy>=3.7                # §3.7 (cobertura de vocabulario); ~570 MB aparte
+ftfy>=6.2                 # §3.1 (mojibake)
+
+# --- Visualización ---
+matplotlib>=3.8
+seaborn>=0.13
+
+# --- Entorno ---
+jupyterlab>=4.0
+ipywidgets>=8.1
+tqdm>=4.66
