@@ -83,7 +83,7 @@ Archivo único: `notebooks/miniproyecto3_restmex_bert.ipynb`
 
 ### Secciones 1–4.3 — Bloque heredado del Miniproyecto 1
 
-**Las celdas 3–70 del notebook de MP1 se copian SIN MODIFICAR**: §1 entorno y semilla, §2
+**Las celdas 3–65 del notebook de MP1 se copian SIN MODIFICAR**: §1 entorno y semilla, §2
 corpus, §3 EDA completo, §4.1 tokenizador por palabras, §4.2 submuestra + Split A + Split B,
 §4.3 `evaluar(...)` + baselines. Es lo que garantiza que las tres entregas se comparen sobre la
 misma submuestra, el mismo split y la misma función de evaluación. Piezas heredadas que aquí
@@ -91,7 +91,7 @@ no se usan (vocabulario por palabras, Split B, `CFG`, `MAX_LEN` en palabras) se 
 no romper la identidad y **no se sobrescriben**: lo propio usa `CFG_BERT`, `MAX_LEN_BERT`.
 
 Una celda puente antes y otra después del bloque. **Aceptación:** verificación programática de
-identidad (68 celdas) y assert de que los baselines reproducen MP1.
+identidad (63 celdas) y assert de que los baselines reproducen MP1.
 
 ### Secciones 4.4–4.7 — Protocolo propio de BERT
 
@@ -194,7 +194,7 @@ producción y por qué), limitaciones y trabajo futuro.
 ## 5. Criterios de aceptación
 
 - [ ] «Restart & Run All» sin errores en ≤ 45 min con T4.
-- [ ] Bloque heredado (§1–§4.3, celdas 3–70 de MP1) idéntico (verificación programática).
+- [ ] Bloque heredado (§1–§4.3, celdas 3–65 de MP1) idéntico (verificación programática).
 - [ ] Baselines reproducen MP1.
 - [ ] Las tres técnicas del guía implementadas y en una tabla única con MP1/MP2.
 - [ ] Ninguno de los defectos del guía (§D-304) replicado.

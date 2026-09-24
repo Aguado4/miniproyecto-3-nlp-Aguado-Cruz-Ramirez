@@ -47,3 +47,6 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# Las métricas ligeras de results/ sí se versionan (respaldan EXPERIMENTS.md)
+!results/metrics/*.csv

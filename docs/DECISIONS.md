@@ -27,7 +27,7 @@ con el notebook de la Sesión 3.
 **Contexto.** El profesor autorizó en MP2 la reutilización con la condición de incluir el
 mismo EDA. MP1 §D-009 excluyó BETO «para una entrega posterior».
 
-**Decisión.** Mismo corpus y **mismas Secciones 1–4.3 de MP1 sin modificar** (celdas 3–70:
+**Decisión.** Mismo corpus y **mismas Secciones 1–4.3 de MP1 sin modificar** (celdas 3–65 de MP1:
 entorno, corpus, EDA, tokenizador, submuestra, Split A/B, `evaluar`, baselines), con celdas
 puente antes y después. A diferencia de MP2 (que solo copió §2–§3), aquí también se hereda el
 protocolo: así la comparación entre entregas no depende de reimplementar el split ni la
@@ -108,6 +108,36 @@ de la decisión.
 
 **Decisión.** Reportar params totales, params entrenables, tiempo de entrenamiento y
 latencia de inferencia (ms/reseña, lote 1 y lote 64) en el mismo hardware.
+
+---
+
+## D-308 · El andamiaje heredado se limpia en MP1, no en MP3
+
+**Estado:** aceptada · 2026-09-23
+
+**Contexto.** `CLAUDE.md` §5 prohíbe dejar comentarios de andamiaje (`<!-- LEER -->`) en el
+entregable, pero §1 obliga a copiar el bloque §1–§4.3 de MP1 **sin modificar**. El bloque heredado
+arrastraba 7 marcadores de MP1, así que las dos reglas no se podían cumplir a la vez.
+
+**Hallazgo.** Los 7 marcadores estaban **obsoletos**: en los 7 casos la prosa que pedían ya
+estaba redactada en la celda inmediatamente anterior (la 17 la cubre la 16, la 36 la 35, la 40
+la 39, la 47 la 46, la 59 la 58, y la 52 es el encabezado de §3.8 cuya tabla está completa en la
+53). No faltaba contenido: sobraba andamiaje.
+
+**Decisión.** Borrarlos **en el notebook de MP1** y volver a copiar el bloque a MP3, en vez de
+editarlos solo aquí. Así el bloque sigue siendo byte-idéntico a su origen y los dos entregables
+quedan limpios. Se aprovechó para quitar otros 2 marcadores de MP1 fuera del bloque heredado
+(§5 y §6 de aquel notebook).
+
+**Alternativas.** (a) Dejarlos y documentar la excepción: incumple `CLAUDE.md` §5 en dos
+entregas. (b) Editarlos solo en MP3: rompe la identidad byte a byte, que es lo único que
+garantiza que las tres entregas sean comparables.
+
+**Consecuencias.** El bloque heredado pasa de 68 a 63 celdas (se eliminaron 5 celdas que solo
+contenían el comentario; 2 conservan su texto sin él). Solo se tocó markdown, así que las
+salidas ejecutadas de MP1 siguen intactas y no hizo falta reejecutar ninguno de los dos
+notebooks. La celda puente de MP3 sigue siendo la única diferencia intencional frente a MP1
+(§D-302).
 
 ---
 

@@ -25,7 +25,7 @@ Los dos archivos que definen el éxito del trabajo están en la raíz y **no se 
 
 ### Relación con las entregas anteriores
 
-- **Secciones 1–4.3 heredadas del Miniproyecto 1 SIN MODIFICAR** (celdas 3–70: entorno,
+- **Secciones 1–4.3 heredadas del Miniproyecto 1 SIN MODIFICAR** (celdas 3–65 de MP1: entorno,
   corpus, EDA, tokenizador, submuestra, Split A/B, `evaluar`, baselines), con una celda puente
   antes y otra después. **No editar esas celdas** (tag `heredado-mp1`; una celda verifica la
   identidad). Lo propio de BERT empieza en §4.4 y usa `CFG_BERT` / `MAX_LEN_BERT`; nunca
