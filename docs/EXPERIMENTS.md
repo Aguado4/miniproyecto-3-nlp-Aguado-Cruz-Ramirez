@@ -6,7 +6,7 @@
 |---|---|
 | Fecha | 2026-09-23 |
 | Plataforma / GPU | Local (Windows 11) · NVIDIA GeForce RTX 4060, 8 GB |
-| torch / transformers | 2.9.1+cu128 / 5.17.0 |
+| Python / torch / transformers | 3.12.2 / 2.11.0+cu128 / 5.17.0 (según la salida guardada de §1 y §4.4) |
 | Semilla | 42 |
 | Checkpoint principal | `dccuchile/bert-base-spanish-wwm-cased` |
 | `MAX_LEN_BERT` | 192 (P95 WordPiece = 189) · padding dinámico · 4,2 % de test truncado |
@@ -44,14 +44,14 @@ Más fragmentadas: anglicismos (*snorkel*, *tripadvisor*), toponimia (*teotihuac
 
 | # | Modelo | Entrega | macro-F1 | Accuracy | MAE | QWK | Entrenables | Tiempo (s) |
 |---|---|---|---:|---:|---:|---:|---:|---:|
-| C | **BETO fine-tuning completo** | MP3 | **0.5953** | 0.6848 | 0.3378 | 0.7840 | 109,854,725 | 1752.6 |
+| C | **BETO fine-tuning completo** | MP3 | **0.5953** | 0.6847 | 0.3378 | 0.7840 | 109,854,725 | 1752.3 |
 | | MP1 · BiLSTM + atención | MP1 | 0.5274 | 0.6758 | 0.3620 | 0.7546 | 9,441,862 | 88.4 |
 | | MP1 · TF-IDF + LogReg | MP1 | 0.5235 | 0.6785 | 0.3760 | 0.7261 | 60,000 | 27.0 |
-| B | BETO congelado + MLP (promedio) | MP3 | 0.5191 | 0.6822 | 0.3580 | 0.7551 | 526,341 | 81.7 |
+| B | BETO congelado + MLP (promedio) | MP3 | 0.5191 | 0.6823 | 0.3580 | 0.7551 | 526,341 | 871.8 |
 | | MP1 · BiLSTM + spaCy (afinados) | MP1 | 0.4863 | 0.6358 | 0.4310 | 0.6942 | 9,441,605 | 38.9 |
-| A | BETO congelado + lineal (promedio) | MP3 | 0.4719 | 0.6468 | 0.4275 | 0.6983 | 3,845 | 80.3 |
-| A | BETO congelado + lineal (`[CLS]`) | MP3 | 0.4578 | 0.6178 | 0.4808 | 0.6460 | 3,845 | 82.0 |
-| A' | BETO congelado + LogReg (promedio) | MP3 | 0.4398 | 0.6135 | 0.4842 | 0.6432 | 3,845 | 382.6 |
+| A | BETO congelado + lineal (promedio) | MP3 | 0.4719 | 0.6468 | 0.4275 | 0.6983 | 3,845 | 870.8 |
+| A | BETO congelado + lineal (`[CLS]`) | MP3 | 0.4578 | 0.6178 | 0.4808 | 0.6460 | 3,845 | 873.1 |
+| A' | BETO congelado + LogReg (promedio) | MP3 | 0.4398 | 0.6135 | 0.4842 | 0.6432 | 3,845 | 897.3 |
 | | MP2 · Transformer desde cero | MP2 | 0.4160 | 0.5858 | 0.6050 | 0.5068 | 4,105,605 | 196.6 |
 | | MP2 · MLP (embeddings promediados) | MP2 | 0.3545 | 0.5268 | 0.8860 | 0.3501 | 3,857,157 | 21.1 |
 | | MP1 · LSTM desde cero | MP1 | 0.2951 | 0.5755 | 0.6510 | 0.3552 | 3,972,741 | 50.1 |
@@ -60,7 +60,9 @@ Más fragmentadas: anglicismos (*snorkel*, *tripadvisor*), toponimia (*teotihuac
 Ganancia sobre TF-IDF: **1★ +0.080 · 2★ +0.166 · 3★ +0.098 · 4★ +0.023 · 5★ −0.009**.
 
 **Costo de inferencia (C).** 8.8 ms/reseña con lote 1 · 1.91 ms/reseña con lote 64.
-Extracción de embeddings congelados (40.000 reseñas, una vez): 77 s.
+Extracción de embeddings congelados (40.000 reseñas, una vez): 867 s en la corrida versionada
+(77 s en una corrida anterior en la misma máquina; probablemente por carga de la GPU, que estaba
+compartida con otras tareas; §17, limitación 3). El tiempo de A, A' y B incluye esa extracción; las cabezas en sí entrenan en segundos.
 La cabeza MLP (B) llegó a 16 épocas antes del early stopping.
 
 ## 4. Estudio de capas y LLRD (§9, `CFG_EST` = 8.000 reseñas / 2 épocas)
@@ -125,8 +127,9 @@ está en torno a **1.000 reseñas, 1/32 de los datos** (interpolando entre 500 y
 
 ## 10. Interpretabilidad (§14)
 
-UMAP: sin ajuste los `[CLS]` forman una nube única (agrupada por tema); tras el ajuste, gradiente
-ordenado 1★→5★ con solapamiento en 2★-3★-4★.
+UMAP: sin ajuste los `[CLS]` forman dos nubes que no separan por polaridad (1★-2★ tienden a un
+borde, mezcladas con 4★-5★); tras el ajuste, una sola banda ordenada 5★→1★ con solapamiento en
+2★-3★-4★.
 
 Integrated Gradients, top-3 subpalabras hacia 1★ en 18 reseñas negativas con negación:
 negación 4 % · léxico 1★ del EDA 6 % · otra 91 %. Los tokens más frecuentes (`pé`, `imo`, `fas`,

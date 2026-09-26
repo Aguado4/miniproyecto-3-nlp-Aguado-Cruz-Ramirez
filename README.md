@@ -58,7 +58,33 @@ accuracy, split sin semilla, padding fijo a 512, `LogSoftmax` antes de una
 
 ## Resultados
 
-> Pendiente de la corrida de referencia ([`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md)).
+Corrida de referencia completa (`Restart & Run All`, 64/64 celdas, sin errores, RTX 4060 local).
+Todas las filas usan la misma submuestra de 40.000 reseñas, el mismo Split A y la misma función
+`evaluar`, así que las tres entregas son directamente comparables. Detalle en
+[`docs/EXPERIMENTS.md`](docs/EXPERIMENTS.md).
+
+| Modelo | Entrega | macro-F1 | Accuracy | MAE | QWK |
+|---|---|---:|---:|---:|---:|
+| **C · BETO *fine-tuning* completo** | MP3 | **0.595** | 0.685 | **0.338** | **0.784** |
+| BiLSTM + atención | MP1 | 0.527 | 0.676 | 0.362 | 0.755 |
+| TF-IDF + Regresión Logística | MP1 | 0.524 | 0.679 | 0.376 | 0.726 |
+| B · BETO congelado + MLP | MP3 | 0.519 | 0.682 | 0.358 | 0.755 |
+| A · BETO congelado + lineal (promedio) | MP3 | 0.472 | 0.647 | 0.428 | 0.698 |
+| Transformer desde cero | MP2 | 0.416 | 0.586 | 0.605 | 0.507 |
+| Baseline (clase mayoritaria) | — | 0.159 | 0.657 | 0.549 | 0.000 |
+
+- **H1 — confirmada.** El *fine-tuning* supera a TF-IDF (+0,072) y la ganancia se concentra en
+  las clases difíciles: 2★ +0,166, 3★ +0,098, 1★ +0,080, frente a 4★ +0,023 y 5★ −0,009.
+- **H2 — confirmada, por poco.** Congelado, ni la mejor cabeza (MLP, 0,519) supera a TF-IDF
+  (0,524). El valor del preentrenamiento se cobra ajustando los pesos; con 4 de las 12 capas
+  descongeladas ya se obtiene todo (§9).
+- **H3 — confirmada con margen.** BETO con 2.000 reseñas (0,499) supera al Transformer desde cero
+  de MP2 entrenado con 32.000 (0,416). Con 8.000 reseñas, BETO (0,565) ya supera al TF-IDF
+  entrenado con las 32.000.
+
+Además: mBERT y DistilBETO rinden menos que BETO (§10), LoRA entrena el 0,27 % de los pesos y
+llega a 0,529 (§12), y la tarea de control `Type` alcanza 0,958 con el mismo modelo (§13), lo
+que sitúa buena parte de la dificultad en la propia polaridad y en el ruido de sus etiquetas.
 
 ## Cómo ejecutarlo
 

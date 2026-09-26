@@ -141,6 +141,48 @@ notebooks. La celda puente de MP3 sigue siendo la única diferencia intencional 
 
 ---
 
+## D-309 · Revisión final contra la consigna y la rúbrica
+
+**Estado:** aceptada · 2026-09-26
+
+**Contexto.** Antes de entregar se releyó el notebook completo contra `consigna.txt` y
+`rubrica.txt`, cotejando cada lectura con la salida o la figura que interpreta.
+
+**Hallazgos.**
+
+1. **Verificación del bloque heredado rota.** §D-308 bajó el bloque de 68 a 63 celdas sin
+   reejecutar, pero la celda de verificación seguía cortando `MP1.cells[3:71]`. Con el MP1 final
+   al lado, el `assert` habría fallado. Se corrigió a `[3:66]`; ejecutando exactamente esa lógica
+   contra el MP1 final (commit `50505c6`) da 63/63 celdas idénticas, y su salida guardada se
+   actualizó a ese resultado.
+2. **Lecturas duplicadas.** Tras la edición a varias manos, §4.5, §4.6, §6 y §9 tenían dos lecturas
+   seguidas de la misma salida, a veces contradictorias. Se conservó la más precisa de cada par.
+3. **Lecturas que no coincidían con su salida.** Entre otras: el `[CLS]` de BETO descrito como
+   entrenado con predicción de siguiente oración (BETO no la usa, como dice §5); un «cuarto de
+   hora» de *fine-tuning* que fueron 29 min; variantes congeladas «tan caras como una BiLSTM»
+   que costaron ~870 s frente a 39-88 s; un UMAP «de una sola nube» que muestra dos; una demo que
+   «responde al orden» cuando ambos órdenes dan 2★; la comparación con MP2 como «misma
+   arquitectura» (BETO tiene 110 M de parámetros frente a 4 M); una memoria de 3,8 GiB que ninguna
+   salida registra; y la ganancia de LLRD (+0,006) presentada como efecto cuando está por debajo
+   del ruido que el propio notebook declara (~0,01).
+4. **Comparaciones con protocolos no idénticos, sin advertir.** *k* = 12 congela los embeddings de
+   entrada (78 % entrenable) y se usa como fila de BETO en §10 y como punto de 8.000 en §11, donde
+   mBERT/DistilBETO y los otros puntos de la curva se ajustan de forma distinta. Se añadieron las
+   advertencias; ninguna cambia las conclusiones.
+5. **Narrativa.** Siete celdas de código propias sin markdown previo, y la gráfica de distancia del
+   error de §16 sin lectura. `EXPERIMENTS.md` registraba la versión de torch y los tiempos de A/B
+   de una corrida anterior, no los de la versionada; `README.md` decía «resultados pendientes».
+
+**Decisión.** Corregir solo texto. En código cambian dos cosas que no alteran ningún resultado:
+el slice de la verificación (hallazgo 1) y un comentario («Gráfica corregida»). Las otras 62
+celdas de código y todas sus salidas quedan idénticas.
+
+**Pendiente, conocido.** Las figuras que usan el carácter ★ en títulos y leyendas lo muestran como
+un recuadro, porque la fuente usada en la corrida de referencia (Windows) no tiene ese glifo. Arreglarlo exige
+reejecutar el notebook; es cosmético y se deja documentado.
+
+---
+
 ## Plantilla para nuevas entradas
 
 ## D-3NN · Título breve

@@ -1,8 +1,9 @@
 # PLAN - Ejecución por fases
 
 > Estado global: **corrida de referencia completa.** Restart & Run All el 2026-09-23 en una
-> RTX 4060 local: 64/64 celdas, 0 errores, 41 min. Lecturas y §17 redactadas con números reales,
-> `EXPERIMENTS.md` lleno. Pendiente: **H3 depende de la corrida de MP2** (`PREVIOS_MP2` vacío).
+> RTX 4060 local: 64/64 celdas, 0 errores, ~67 min. Lecturas y §17 redactadas con números reales,
+> `EXPERIMENTS.md` lleno, `PREVIOS_MP2` con la corrida de referencia de MP2 (H3 resuelta).
+> Revisión final contra consigna y rúbrica el 2026-09-26 (`DECISIONS.md` §D-309).
 
 Leyenda: `[ ]` pendiente · `[~]` código listo, falta ejecutar y leer · `[x]` hecho
 
